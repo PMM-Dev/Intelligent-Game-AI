@@ -20,6 +20,12 @@ namespace ManaBingsu
 
         [SerializeField]
         private Transform _playerTransform;
+        [SerializeField]
+        private Cover[] availableCovers;
+
+        private Material _material;
+
+        private Transform _bestCoverSpot;
 
         [SerializeField] 
         private float _currentHealth;
@@ -32,11 +38,22 @@ namespace ManaBingsu
         private void Start()
         {
             _currentHealth = _startingHealth;
+            _material = GetComponent<MeshRenderer>().material;
         }
 
         public void Update()
         {
             CurrentHealth += Time.deltaTime * _healthRestoreRate;
+        }
+
+        public void SetColor(Color color)
+        {
+            _material.color = color;
+        }
+
+        public void SetBestCoverSpot(Transform bestCoverSpot)
+        {
+            _bestCoverSpot = bestCoverSpot;
         }
     }
 }
