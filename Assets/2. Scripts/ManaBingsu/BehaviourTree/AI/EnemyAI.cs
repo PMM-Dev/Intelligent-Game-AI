@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ namespace ManaBingsu
         private float _chasingRange;
         [SerializeField]
         private float _shootingRange;
+
 
         [SerializeField]
         private Transform _playerTransform;
@@ -54,6 +56,12 @@ namespace ManaBingsu
         public void SetBestCoverSpot(Transform bestCoverSpot)
         {
             _bestCoverSpot = bestCoverSpot;
+        }
+
+
+        public Transform GetBestCoverSpot()
+        {
+            return _bestCoverSpot;
         }
     }
 }
