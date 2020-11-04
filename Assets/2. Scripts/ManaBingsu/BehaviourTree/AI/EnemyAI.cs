@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace ManaBingsu
 {
@@ -26,8 +28,10 @@ namespace ManaBingsu
         private Cover[] availableCovers;
 
         private Material _material;
-
         private Transform _bestCoverSpot;
+        private NavMeshAgent _agent;
+
+        private Node _topNode;
 
         [SerializeField] 
         private float _currentHealth;
@@ -37,15 +41,55 @@ namespace ManaBingsu
             set { _currentHealth = Mathf.Clamp(value, 0, _startingHealth); }
         }
 
+        private void Awake()
+        {
+            _agent = GetComponent<NavMeshAgent>();
+            _material = GetComponent<MeshRenderer>().material;
+
+        }
+
         private void Start()
         {
             _currentHealth = _startingHealth;
-            _material = GetComponent<MeshRenderer>().material;
+            ConstructBehaviourTree();
+        }
+
+        private void ConstructBehaviourTree()
+        {
+            IsCoverAvailableNode coverAvailableNode = new IsCoverAvailableNode(availableCovers, _playerTransform, this);
+            GoToCoverNode goToCoverNode = new GoToCoverNode(_agent, this);
+            HealthNode healthNode = new HealthNode(this, _lowHealthThreshold);
+            IsCoveredNode isCoveredNode = new IsCoveredNode(_playerTransform, transform);
+            ChaseNode chaseNode = new ChaseNode(_playerTransform, _agent, this);
+            RangeNode chasingRangeNode = new RangeNode(_chasingRange, _playerTransform, transform);
+            RangeNode shootingRangeNode = new RangeNode(_shootingRange, _playerTransform, transform);
+            ShootNode shootNode = new ShootNode(_agent, this);
+
+            Sequence chaseSequence = new Sequence(new List<Node> { coverAvailableNode, chaseNode });
+            Sequence shootSequence = new Sequence(new List<Node> { shootingRangeNode, shootNode });
+
+            Sequence goToCoverSequence = new Sequence(new List<Node> { coverAvailableNode, goToCoverNode });
+            Selector findCoverSelector = new Selector(new List<Node> { goToCoverSequence, chaseSequence });
+            Selector tryToTakeCoverSelector = new Selector(new List<Node> { isCoveredNode, findCoverSelector });
+            Selector mainCoverSequence = new Selector(new List<Node> { healthNode, tryToTakeCoverSelector });
+
+            _topNode = new Selector(new List<Node> { mainCoverSequence, shootSequence, chaseSequence });
         }
 
         public void Update()
         {
+            _topNode.Evaluate();
+            if (_topNode.nodeState == NodeState.Failure)
+            {
+                SetColor(Color.red);
+            }
+
             CurrentHealth += Time.deltaTime * _healthRestoreRate;
+        }
+
+        private void OnMouseDown()
+        {
+            CurrentHealth -= 10f;
         }
 
         public void SetColor(Color color)

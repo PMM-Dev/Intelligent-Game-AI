@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace ManaBingsu
 {
-    public class IsCoveredAvailableNode : Node
+    public class IsCoverAvailableNode : Node
     {
         private Cover[] _availableCovers;
         private Transform _target;
         private EnemyAI _ai;
 
-        public IsCoveredAvailableNode(Cover[] availableCovers, Transform target, EnemyAI ai)
+        public IsCoverAvailableNode(Cover[] availableCovers, Transform target, EnemyAI ai)
         {
             _availableCovers = availableCovers;
             _target = target;
@@ -21,7 +21,7 @@ namespace ManaBingsu
         {
             Transform bestCoverSpot = FindBestCoverSpot();
             _ai.SetBestCoverSpot(bestCoverSpot);
-            return bestSpot != null ? NodeState.Success : NodeState.Failure;
+            return bestCoverSpot != null ? NodeState.Success : NodeState.Failure;
         }
 
         private Transform FindBestCoverSpot()
