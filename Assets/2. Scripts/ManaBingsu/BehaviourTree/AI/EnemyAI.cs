@@ -65,7 +65,7 @@ namespace ManaBingsu
             RangeNode shootingRangeNode = new RangeNode(_shootingRange, _playerTransform, transform);
             ShootNode shootNode = new ShootNode(_agent, this);
 
-            Sequence chaseSequence = new Sequence(new List<Node> { coverAvailableNode, chaseNode });
+            Sequence chaseSequence = new Sequence(new List<Node> { chasingRangeNode, chaseNode });
             Sequence shootSequence = new Sequence(new List<Node> { shootingRangeNode, shootNode });
 
             Sequence goToCoverSequence = new Sequence(new List<Node> { coverAvailableNode, goToCoverNode });
@@ -82,6 +82,7 @@ namespace ManaBingsu
             if (_topNode.nodeState == NodeState.Failure)
             {
                 SetColor(Color.red);
+                _agent.isStopped = true;
             }
 
             CurrentHealth += Time.deltaTime * _healthRestoreRate;

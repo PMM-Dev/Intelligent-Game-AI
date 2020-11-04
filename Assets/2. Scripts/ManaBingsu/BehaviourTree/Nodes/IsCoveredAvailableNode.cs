@@ -26,6 +26,13 @@ namespace ManaBingsu
 
         private Transform FindBestCoverSpot()
         {
+            if (_ai.GetBestCoverSpot() != null)
+            {
+                if (CheckIfCoverIsValid(_ai.GetBestCoverSpot()))
+                {
+                    return _ai.GetBestCoverSpot();
+                }
+            }
             float minAngle = 90;
             Transform bestSpot = null;
             for (int i = 0; i < _availableCovers.Length; i++)

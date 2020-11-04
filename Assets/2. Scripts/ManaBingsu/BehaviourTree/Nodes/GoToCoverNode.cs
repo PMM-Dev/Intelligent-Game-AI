@@ -26,7 +26,7 @@ namespace ManaBingsu
             }
             _ai.SetColor(Color.blue);
             float distance = Vector3.Distance(coverSpot.position, _agent.transform.position);
-            if (distance > 0.2f)
+            if (distance > 0.5f)
             {
                 _agent.isStopped = false;
                 _agent.SetDestination(coverSpot.position);
