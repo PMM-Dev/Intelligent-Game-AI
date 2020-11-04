@@ -13,6 +13,14 @@ namespace ManaBingsu
         [SerializeField] 
         private float _healthRestoreRate;
 
+        [SerializeField]
+        private float _chasingRange;
+        [SerializeField]
+        private float _shootingRange;
+
+        [SerializeField]
+        private Transform _playerTransform;
+
         [SerializeField] 
         private float _currentHealth;
         public float CurrentHealth
