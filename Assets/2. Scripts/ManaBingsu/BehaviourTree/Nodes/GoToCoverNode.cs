@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.TestTools;
 
-namespace ManaBingsu
+namespace ManaBingsu.BT
 {
     public class GoToCoverNode : Node
     {

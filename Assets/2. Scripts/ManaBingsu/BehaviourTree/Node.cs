@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VR;
 
-namespace ManaBingsu
+namespace ManaBingsu.BT
 {
     [System.Serializable]
     public abstract class Node

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ManaBingsu
+namespace ManaBingsu.BT
 {
     public class IsCoveredNode : Node
     {

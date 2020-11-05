@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
-namespace ManaBingsu
+namespace ManaBingsu.BT
 {
     public class RangeNode : Node
     {
