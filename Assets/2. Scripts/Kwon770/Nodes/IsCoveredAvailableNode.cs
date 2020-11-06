@@ -63,7 +63,7 @@ namespace kwon770
         private bool CheckIfCoverIsValid(Transform spot)
         {
             RaycastHit hit;
-            Vector3 direction = _target.position = spot.position;
+            Vector3 direction = _target.position - spot.position;
             if (Physics.Raycast(spot.position, direction, out hit))
             {
                 if (hit.collider.transform != _target)
