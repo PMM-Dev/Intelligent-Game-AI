@@ -79,6 +79,7 @@ namespace kwon770
             if (_topNode.NodeState == NodeState.Failure)
             {
                 SetColor(Color.red);
+                _agent.isStopped = true;
             }
 
             _currentHealth += Time.deltaTime * _healthRestoreRate;
